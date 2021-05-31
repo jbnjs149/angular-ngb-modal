@@ -1,18 +1,26 @@
 <ng-template #modalContent let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">Heading</h4>
-    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+  <div class="modal-header" *ngIf="modalOptions?.header" [ngClass]="modalOptions?.header?.headerClass">
+    <h4 class="modal-title" id="modal-title" [ngClass]="modalOptions.header.customClass">
+      {{modalOptions.header.title}}
+    </h4>
+    <button type="button" *ngIf="modalOptions.header.showCloseIcon"
+      class="close" aria-describedby="modal-title" (click)="modalNoAction(modal)">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <p><strong>Are you sure you want to delete <span class="text-primary">"John Doe"</span> profile?</strong></p>
-    <p>All information associated to this user profile will be permanently deleted.
-      <span class="text-danger">This operation can not be undone.</span>
-    </p>
+  <div class="modal-body" *ngIf="modalOptions?.body?.show" [ngClass]="modalOptions?.body?.bodyClass">
+    <div [innerHTML]="modalOptions.body.content" [ngClass]="modalOptions.body.customClass"></div>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="modalNoAction(modal)">No</button>
-    <button type="button" class="btn btn-danger" (click)="modalYesAction(modal);">Yes</button>
+  <div class="modal-footer" *ngIf="modalOptions?.footer?.show" [ngClass]="modalOptions?.footer?.footerClass">
+    <button type="button" *ngIf="modalOptions?.footer?.noBtn?.show"
+      [ngClass]="modalOptions.footer.noBtn.customClass"
+      (click)="modalNoAction(modal)">
+      {{modalOptions.footer.noBtn.label}}
+    </button>
+    <button type="button" *ngIf="modalOptions?.footer?.yesBtn?.show"
+     [ngClass]="modalOptions.footer.yesBtn.customClass"
+     (click)="modalYesAction(modal);">
+     {{modalOptions.footer.yesBtn.label}}
+     </button>
   </div>
 </ng-template>

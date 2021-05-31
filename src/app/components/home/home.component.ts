@@ -25,7 +25,23 @@ export class HomeComponent implements OnInit {
   }
 
   openConfimModal() {
-    const options = {}; // add all modal option here. like size, button labels etc
+    const options = {
+      header: {
+        title: 'Confirm',
+        customClass: '',
+        showCloseIcon: true,
+        headerClass: ''
+      },
+      body: {
+        show: true,
+        content: '<p>Are u sure?</p>',
+        customClass: '',
+        bodyClass: ''
+      },
+      footer: {
+        show: false
+      }
+    }; // add all modal option here. like size, button labels etc
     this.modalService.openModal(options);
   }
   modalAction() {
