@@ -1,5 +1,6 @@
 <ng-template #modalContent let-modal>
-  <div class="modal-header" *ngIf="modalOptions?.header" [ngClass]="modalOptions?.header?.headerClass">
+  <div class="modal-header" *ngIf="modalOptions?.header?.show"
+    [ngClass]="modalOptions?.header?.headerClass">
     <h4 class="modal-title" id="modal-title" [ngClass]="modalOptions.header.customClass">
       {{modalOptions.header.title}}
     </h4>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalConfig, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { modalConfigOptions } from './modal-config-interface';
 import { ModalConfigService } from './modal-config.service';
 
@@ -46,14 +46,16 @@ export class ModalConfig implements OnInit {
     if (modalData.options) {
       this.setModalOptions(modalData.options);
     }
-
-    this.modalService.open(this.modalContent);
+    const option: NgbModalOptions = {
+      size: this.modalOptions.modalSize
+    }
+    this.modalService.open(this.modalContent, option);
   }
 
   modalYesAction(modalObj) {
     const obj = {
       action: 'yes',
-      data: {}
+      data: this.modalOptions
     };
     this.customModalService.modalActionMethod(obj);
     if (modalObj) {
@@ -64,7 +66,7 @@ export class ModalConfig implements OnInit {
   modalNoAction(modalObj) {
     const obj = {
       action: 'no',
-      data: {}
+      data: this.modalOptions
     };
     this.customModalService.modalActionMethod(obj);
     if (modalObj) {
@@ -75,7 +77,10 @@ export class ModalConfig implements OnInit {
   resetModalOptions() {
     try {
       this.modalOptions = {
+        id: 'modalUniqueId',
+        modalSize: 'md',
         header: {
+          show: true,
           title: 'Confim Modal Header',
           customClass: '',
           showCloseIcon: true,
