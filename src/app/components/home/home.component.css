@@ -1,0 +1,41 @@
+.orb {
+  width: 100%;
+  background: #999;
+  display: inline-block;
+  transition: all 0.2s ease-out;
+}
+
+.orb:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.marquee {
+  height: 200px;
+  width: 800px;
+  border: 2px solid #eee;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.marquee--inner {
+  display: block;
+  width: 100%;
+  margin: 70px 0;
+  position: absolute;
+  animation: marquee 5s linear infinite;
+}
+
+.marquee--inner:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: -100%;
+  }
+}
