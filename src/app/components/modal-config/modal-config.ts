@@ -1,5 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbModalConfig, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  NgbModalConfig,
+  NgbModal,
+  NgbModalOptions
+} from '@ng-bootstrap/ng-bootstrap';
 import { modalConfigOptions } from './modal-config-interface';
 import { ModalConfigService } from './modal-config.service';
 
@@ -9,7 +13,7 @@ import { ModalConfigService } from './modal-config.service';
   // add NgbModalConfig and NgbModal to the component providers
   providers: [NgbModalConfig, NgbModal]
 })
-export class ModalConfig implements OnInit {
+export class ModalConfig implements OnInit, OnDestroy {
   @ViewChild('modalContent') modalContent;
   public modalTriggerSubscription;
 
@@ -48,7 +52,7 @@ export class ModalConfig implements OnInit {
     }
     const option: NgbModalOptions = {
       size: this.modalOptions.modalSize
-    }
+    };
     this.modalService.open(this.modalContent, option);
   }
 
@@ -118,6 +122,13 @@ export class ModalConfig implements OnInit {
       console.log('this.modalOptions', this.modalOptions);
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.modalTriggerSubscription) {
+      this.modalTriggerSubscription.unsubscribe();
+      this.modalTriggerSubscription = undefined;
     }
   }
 }
