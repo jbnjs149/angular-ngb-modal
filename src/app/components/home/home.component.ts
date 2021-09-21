@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { modalConfigOptions } from '../modal-config/modal-config-interface';
 import { ModalConfigService } from '../modal-config/modal-config.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   public modalSubscription;
   constructor(public modalService: ModalConfigService) {}
 
@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
 
   initTriggerOption() {
     console.log('initTriggerOption home');
-    this.modalSubscription = this.modalService.modalAction.subscribe(data => {
+    this.modalSubscription = this.modalService.modalAction.subscribe((data) => {
       console.log('response', data);
       if (data && data.action === 'yes') {
         this.modalAction();
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
         title: 'Info',
         customClass: '',
         showCloseIcon: true,
-        headerClass: ''
+        headerClass: '',
       },
       body: {
         show: true,
@@ -64,15 +64,22 @@ export class HomeComponent implements OnInit {
             <br><br>Thanking you<br>Yours sincerely,
         </div>`,
         customClass: '',
-        bodyClass: ''
+        bodyClass: '',
       },
       footer: {
-        show: false
-      }
+        show: false,
+      },
     }; // add all modal option here. like size, button labels etc
     this.modalService.openModal(options);
   }
   modalAction() {
     console.log('Yes Clicked');
+  }
+
+  ngOnDestroy() {
+    if (this.modalSubscription) {
+      this.modalSubscription.unsubscribe();
+      this.modalSubscription = undefined;
+    }
   }
 }
